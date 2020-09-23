@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { UploadService } from './upload.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'pdf-loader';
+    @ViewChild('fileUpload', { static: false }) fileUpload: ElementRef;
+    files = [];
+
+    constructor(private uploadService: UploadService) {
+
+    }
+
+    uploadFile(event): any {
+        this.uploadService.upload(event);
+    }
+
 }
