@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Result} from './Shared/result.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-    SERVER_URL = 'http://localhost:8080/api/pdf-loaded';
+    public SERVER_URL = 'http://localhost:8080';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -26,7 +28,7 @@ export class UploadService {
               headers
           };
           console.log(formData, file, typeof file, typeof file.name);
-          this.httpClient.post(this.SERVER_URL, formData, options)
+          this.httpClient.post(this.SERVER_URL + '/api/pdf-loaded', formData, options)
 
               .subscribe(
                   data => console.log('success'),
