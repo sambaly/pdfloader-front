@@ -1,3 +1,50 @@
-<input type="file" name="fileToLoad" id="fileToLoad" hidden (change)="uploadFile($event)" enc>
-<label for="fileToLoad" id="selector">Charger un ficher</label>
+<div class="file-loader" *ngIf="!disponibleDatas">
+    <input type="file" name="fileToLoad" id="fileToLoad" hidden (change)="uploadFile($event)">
+    <label for="fileToLoad" id="selector">Charger un ficher</label>
+</div>
+<!--<div *ngIf="disponibleDatas">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nom rédacteur</th>
+                <th>Nombre d'articles écrits</th>
+                <th>date d'enregistrement</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let result of articleWritersAndOccurrences; let index = index">
+                <td>{{ result?.writerName }}</td>
+                <td>{{ result?.writerOccurrencesCount }}</td>
+                <td>{{ result?.dateEnregistrement }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>-->
+<div *ngIf="disponibleDatas" class="mat-elevation-z8">
+    <table mat-table [dataSource]="pageSlice">
+        <ng-container matColumnDef="writerName">
+            <th mat-header-cell *matHeaderCellDef>Nom rédacteur</th>
+            <td mat-cell *matCellDef="let element">{{ element.writerName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="writerOccurrencesCount">
+            <th mat-header-cell *matHeaderCellDef>Nombre d'articles écrits</th>
+            <td mat-cell *matCellDef="let element">{{ element.writerOccurrencesCount }}</td>
+        </ng-container>
+        <ng-container matColumnDef="dateEnregistrement">
+            <th mat-header-cell *matHeaderCellDef>Date d'enregistrement</th>
+            <td mat-cell *matCellDef="let element">{{ element.dateEnregistrement }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [length]="this.articleWritersAndOccurrences.length"
+                   [pageSize]="5"
+                   [pageSizeOptions]="[5, 10, 15, 20]"
+                   (page)="onPageChange($event)"
+        showFirstLastButtons></mat-paginator>
+</div>
+
+
 
